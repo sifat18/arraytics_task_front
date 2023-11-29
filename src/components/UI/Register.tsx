@@ -2,12 +2,7 @@
 import { Button, Card, Col, Row, message } from "antd";
 import { SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {
-  UserOutlined,
-  MailOutlined,
-  UserAddOutlined,
-  LockOutlined,
-} from "@ant-design/icons";
+import { MailOutlined, UserAddOutlined, LockOutlined } from "@ant-design/icons";
 import Title from "antd/es/typography/Title";
 import { useNavigate } from "react-router-dom";
 import register from "/register.png";
@@ -31,7 +26,6 @@ const Register = () => {
     console.log({ data });
     try {
       const res = await userCreate(data);
-      console.log({ res });
       if (res?.error) {
         message.error(res?.error?.data);
       } else {

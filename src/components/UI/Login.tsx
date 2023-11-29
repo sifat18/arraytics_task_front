@@ -2,7 +2,7 @@
 import { Button, Col, Row, message } from "antd";
 import { SubmitHandler } from "react-hook-form";
 import { useUserLoginMutation } from "../../redux/api/authApi";
-import { getUserInfo, storeUserInfo } from "../../helpers/authHelper";
+import { storeUserInfo } from "../../helpers/authHelper";
 import login from "/login.png";
 import { useNavigate } from "react-router-dom";
 import Form from "../Forms/Form";
