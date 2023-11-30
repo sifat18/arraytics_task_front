@@ -5,19 +5,19 @@ import App from "../App";
 import NotFound from "../components/UI/NotFound";
 import Login from "../components/UI/Login";
 import Register from "../components/UI/Register";
+import { Home } from "../pages/Home";
+import DashBoard from "../pages/DashBoard";
+import GetUsers from "../pages/GetUsers";
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
-      //   {
-      //     path: "/",
-      //     element: <Home />,
-      //   },
-      //   {
-      //     path: "/books",
-      //     element: <Books />,
-      //   },
+      {
+        path: "/",
+        element: <Home />,
+      },
+
       //   {
       //     path: "/books/:id",
       //     element: <BookDetails />,
@@ -48,7 +48,16 @@ export const router = createBrowserRouter([
       },
     ],
   },
-
+  {
+    path: "/profile",
+    element: <DashBoard children={<GetUsers />} />,
+    children: [
+      {
+        path: "/profile/all-users",
+        element: <DashBoard children={<GetUsers />} />,
+      },
+    ],
+  },
   {
     path: "*",
     element: <NotFound />,
