@@ -37,15 +37,7 @@ export const NavBar = () => {
         <NavLink to={"/"}>
           <li>Home</li>{" "}
         </NavLink>
-        <NavLink to={"/about"}>
-          <li>About</li>
-        </NavLink>
-        <NavLink to={"/"}>
-          <li>Services</li>
-        </NavLink>
-        <NavLink to={"/"}>
-          <li>Contact</li>
-        </NavLink>
+
         {first ? (
           <NavLink to={"/profile"}>
             <li>Dashboard</li>

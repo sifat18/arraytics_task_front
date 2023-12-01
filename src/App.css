@@ -43,7 +43,7 @@ a {
   align-items: center;
   font-size: 2rem;
   font-weight: 400;
-  color: #21b7e2;
+  color: black;
   font-family: Grandstander, cursive;
 }
 
@@ -184,7 +184,7 @@ background-color: #edf2f4;
   word-wrap: break-word;
 }
 .hero .tail span {
-  color: #489fb5;
+  color: #00334c;
   font-size: 0.7rem;
   font-family: Inter, sans-serif;
   font-weight: 600;
