@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   DeleteOutlined,
@@ -5,7 +6,7 @@ import {
   ReloadOutlined,
 } from "@ant-design/icons";
 
-import { Button, Col, Input, Modal, Row, message } from "antd";
+import { Button, Col, Select, Input, Modal, Row, message } from "antd";
 import { useState } from "react";
 import dayjs from "dayjs";
 
@@ -27,15 +28,17 @@ const GetItemsList = () => {
   const [deleteItem] = useDeleteItemMutation();
 
   const query: Record<string, any> = {};
-  const [sortBy, setSortBy] = useState<string>("");
-  const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
-
+  const [nameFilter, setNameFilter] = useState<any>("");
+  const [idFilter, setIdFilter] = useState<any>("");
+  const [createByFilter, setCreateByFilter] = useState<any>("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [singleData, setSingleData] = useState({});
 
   query["searchTerm"] = searchTerm;
-
+  query["Name"] = nameFilter;
+  query["Id"] = idFilter;
+  query["created_by"] = createByFilter;
   const debouncedTerm = useDebounced({
     searchQuery: searchTerm,
     delay: 600,
@@ -44,10 +47,23 @@ const GetItemsList = () => {
   if (debouncedTerm) {
     query["searchTerm"] = debouncedTerm;
   }
+
   const { data, isLoading } = useItemsQuery({ ...query });
 
   const item = data?.items;
   //   const meta = data?.meta;
+  const itemOptions = item?.map((itm: any) => ({
+    value: itm?.Id,
+    label: itm?.Id,
+  }));
+  const nameOptions = [...new Set(item?.map((itm: any) => itm?.Name))]
+    .filter(Boolean)
+    .map((name) => ({ value: name, label: name }));
+  const createdByOptions = [
+    ...new Set(item?.map((itm: any) => itm?.created_by)),
+  ]
+    .filter(Boolean)
+    .map((name) => ({ value: name, label: name }));
 
   const handleOk = () => {
     setIsModalOpen(false);
@@ -131,15 +147,19 @@ const GetItemsList = () => {
     // setSize(pageSize);
   };
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
-    const { order, field } = sorter;
-    setSortBy(field as string);
-    setSortOrder(order === "ascend" ? "asc" : "desc");
+    // const { order, field } = sorter;
+    // setSortBy(field as string);
+    // setSortOrder(order === "ascend" ? "asc" : "desc");
   };
 
   const resetFilters = () => {
-    setSortBy("");
-    setSortOrder("");
-    setSearchTerm("");
+    setIdFilter("");
+    setNameFilter("");
+    setCreateByFilter("");
+    query["searchTerm"] = "";
+    query["Id"] = "";
+    query["Name"] = "";
+    query["created_by"] = "";
   };
 
   const onSubmit = async (data: any) => {
@@ -147,7 +167,7 @@ const GetItemsList = () => {
     try {
       const res = await updateItem(data).unwrap();
       if (res) {
-        message.success("User updated");
+        message.success("itm updated");
         setIsModalOpen(false);
       } else {
         message.error("Something went wrong");
@@ -172,7 +192,7 @@ const GetItemsList = () => {
           }}
         />
         <div>
-          {(!!sortBy || !!sortOrder || !!searchTerm) && (
+          {(!!nameFilter || !!idFilter || !!createByFilter || !!searchTerm) && (
             <Button
               onClick={resetFilters}
               type="primary"
@@ -184,6 +204,78 @@ const GetItemsList = () => {
         </div>
       </ActionBar>
 
+      <div
+        style={{
+          border: "1px solid #d9d9d9",
+          borderRadius: "5px",
+          padding: "15px",
+          marginBottom: "10px",
+        }}
+      >
+        <p
+          style={{
+            margin: "0.5em 0",
+            fontFamily: "Rasa, serif",
+            fontSize: "1.5rem",
+            color: "#35353F",
+          }}
+        >
+          filters
+        </p>
+        <Row gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
+          <Col span={8} style={{ margin: "10px 0" }}>
+            <p>Id</p>
+            <Select
+              defaultValue=""
+              style={{ width: 250 }}
+              onChange={(value) => setIdFilter(value)}
+              options={
+                itemOptions?.length > 0
+                  ? [{ value: "", label: "All" }, ...itemOptions]
+                  : [{ value: "", label: "All" }]
+              }
+            />
+          </Col>
+          <Col span={8} style={{ margin: "10px 0" }}>
+            <p>Name</p>
+
+            <Select
+              defaultValue=""
+              style={{ width: 250 }}
+              onChange={(value) => {
+                setNameFilter(value);
+                setIdFilter("");
+                setCreateByFilter("");
+                setSearchTerm("");
+              }}
+              options={
+                nameOptions?.length > 0
+                  ? [{ value: "", label: "All" }, ...nameOptions]
+                  : [{ value: "", label: "All" }]
+              }
+            />
+          </Col>
+          <Col span={8} style={{ margin: "10px 0" }}>
+            <p>Created By</p>
+
+            <Select
+              defaultValue=""
+              style={{ width: 250 }}
+              onChange={(value) => {
+                setCreateByFilter(value);
+                setIdFilter("");
+                setNameFilter("");
+                setSearchTerm("");
+              }}
+              options={
+                createdByOptions?.length > 0
+                  ? [{ value: "", label: "All" }, ...createdByOptions]
+                  : [{ value: "", label: "All" }]
+              }
+            />
+          </Col>
+        </Row>
+      </div>
       <AnTable
         loading={isLoading}
         columns={columns}

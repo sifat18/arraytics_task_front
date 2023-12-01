@@ -30,7 +30,7 @@ export const serviceApi = baseApi.injectEndpoints({
           params: arg,
         };
       },
-      transformResponse: (response: any[]) => {
+      transformResponse: (response: any) => {
         return {
           users: response.data,
         };

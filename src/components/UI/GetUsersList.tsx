@@ -5,7 +5,7 @@ import {
   ReloadOutlined,
 } from "@ant-design/icons";
 
-import { Button, Col, Input, Modal, Row, message } from "antd";
+import { Button, Col, Input, Select, Modal, Row, message } from "antd";
 import { useState } from "react";
 import dayjs from "dayjs";
 
@@ -26,14 +26,20 @@ const GetUsersList = () => {
   const [deleteUser] = useDeleteClientMutation();
 
   const query: Record<string, any> = {};
-  const [sortBy, setSortBy] = useState<string>("");
-  const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [nameFilter, setNameFilter] = useState<any>("");
+  const [idFilter, setIdFilter] = useState<any>("");
+  const [emailFilter, setEmailFilter] = useState<any>("");
+  const [createByFilter, setCreateByFilter] = useState<any>("");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [singleData, setSingleData] = useState({});
 
   query["searchTerm"] = searchTerm;
+  query["Name"] = nameFilter;
+  query["email"] = emailFilter;
+  query["Id"] = idFilter;
+  query["created_by"] = createByFilter;
 
   const debouncedTerm = useDebounced({
     searchQuery: searchTerm,
@@ -47,6 +53,21 @@ const GetUsersList = () => {
 
   const users = data?.users;
   //   const meta = data?.meta;
+  const userOptions = users?.map((user: any) => ({
+    value: user?.Id,
+    label: user?.Id,
+  }));
+  const nameOptions = [...new Set(users?.map((itm: any) => itm?.Name))]
+    .filter(Boolean)
+    .map((name) => ({ value: name, label: name }));
+  const createdByOptions = [
+    ...new Set(users?.map((itm: any) => itm?.created_by)),
+  ]
+    .filter(Boolean)
+    .map((name) => ({ value: name, label: name }));
+  const emailOptions = [...new Set(users?.map((itm: any) => itm?.email))]
+    .filter(Boolean)
+    .map((name) => ({ value: name, label: name }));
 
   const handleOk = () => {
     setIsModalOpen(false);
@@ -140,9 +161,16 @@ const GetUsersList = () => {
   };
 
   const resetFilters = () => {
-    setSortBy("");
-    setSortOrder("");
     setSearchTerm("");
+    setIdFilter("");
+    setEmailFilter("");
+    setNameFilter("");
+    setCreateByFilter("");
+    query["searchTerm"] = "";
+    query["Id"] = "";
+    query["email"] = "";
+    query["Name"] = "";
+    query["created_by"] = "";
   };
 
   const onSubmit = async (data: any) => {
@@ -172,10 +200,18 @@ const GetUsersList = () => {
           }}
           onChange={(e) => {
             setSearchTerm(e.target.value);
+            setCreateByFilter("");
+            setIdFilter("");
+            setEmailFilter("");
+            setNameFilter("");
           }}
         />
         <div>
-          {(!!sortBy || !!sortOrder || !!searchTerm) && (
+          {(!!emailFilter ||
+            !!nameFilter ||
+            !!idFilter ||
+            !!createByFilter ||
+            !!searchTerm) && (
             <Button
               onClick={resetFilters}
               type="primary"
@@ -186,6 +222,100 @@ const GetUsersList = () => {
           )}
         </div>
       </ActionBar>
+
+      <div
+        style={{
+          border: "1px solid #d9d9d9",
+          borderRadius: "5px",
+          padding: "15px",
+          marginBottom: "10px",
+        }}
+      >
+        <p
+          style={{
+            margin: "0.5em 0",
+            fontFamily: "Rasa, serif",
+            fontSize: "1.5rem",
+            color: "#35353F",
+          }}
+        >
+          filters
+        </p>
+        <Row gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
+          <Col span={8} style={{ margin: "10px 0" }}>
+            <p>Id</p>
+            <Select
+              defaultValue=""
+              style={{ width: 250 }}
+              onChange={(value) => setIdFilter(value)}
+              options={
+                userOptions?.length > 0
+                  ? [{ value: "", label: "All" }, ...userOptions]
+                  : [{ value: "", label: "All" }]
+              }
+            />
+          </Col>
+          <Col span={8} style={{ margin: "10px 0" }}>
+            <p>Email</p>
+            <Select
+              defaultValue=""
+              style={{ width: 250 }}
+              onChange={(value) => {
+                setEmailFilter(value);
+                setIdFilter("");
+                setNameFilter("");
+                setCreateByFilter("");
+                setSearchTerm("");
+              }}
+              options={
+                emailOptions?.length > 0
+                  ? [{ value: "", label: "All" }, ...emailOptions]
+                  : [{ value: "", label: "All" }]
+              }
+            />
+          </Col>
+          <Col span={8} style={{ margin: "10px 0" }}>
+            <p>Name</p>
+
+            <Select
+              defaultValue=""
+              style={{ width: 250 }}
+              onChange={(value) => {
+                setNameFilter(value);
+                setIdFilter("");
+                setEmailFilter("");
+                setCreateByFilter("");
+                setSearchTerm("");
+              }}
+              options={
+                nameOptions?.length > 0
+                  ? [{ value: "", label: "All" }, ...nameOptions]
+                  : [{ value: "", label: "All" }]
+              }
+            />
+          </Col>
+          <Col span={8} style={{ margin: "10px 0" }}>
+            <p>Created By</p>
+
+            <Select
+              defaultValue=""
+              style={{ width: 250 }}
+              onChange={(value) => {
+                setCreateByFilter(value);
+                setIdFilter("");
+                setEmailFilter("");
+                setNameFilter("");
+                setSearchTerm("");
+              }}
+              options={
+                createdByOptions?.length > 0
+                  ? [{ value: "", label: "All" }, ...createdByOptions]
+                  : [{ value: "", label: "All" }]
+              }
+            />
+          </Col>
+        </Row>
+      </div>
 
       <AnTable
         loading={isLoading}

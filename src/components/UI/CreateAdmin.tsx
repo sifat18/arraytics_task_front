@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Col, Row, message } from "antd";
 import Form from "../Forms/Form";
 import FormInput from "../Forms/FormInput";

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Hero from "../components/UI/Hero";
 import { Card, Row, Col, Tooltip, Divider, message } from "antd";
 import glass from "/glass-1.jpg";
@@ -10,9 +11,9 @@ import { getUserInfo } from "../helpers/authHelper";
 import { useCreateOrderMutation } from "../redux/api/userApi";
 
 export const Home = () => {
-  const { Id } = getUserInfo();
+  const { Id } = getUserInfo() as any;
   const [createOrder] = useCreateOrderMutation();
-  const { data: items, isLoading } = useItemsQuery({});
+  const { data: items } = useItemsQuery({});
   console.log({ items });
   return (
     <div>

@@ -1,13 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // import BreadCrumb from "@/components/BreadCrumb";
 
 import GetItemsList from "../components/UI/GetItemsList";
-import { getUserInfo } from "../helpers/authHelper";
 
 const GetItems = () => {
-  const { role } = getUserInfo() as any;
-
-  const base = role;
-
   return (
     <div>
       {/* <BreadCrumb
