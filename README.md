@@ -1,4 +1,19 @@
-# React + TypeScript + Vite
+## Shopping Application
+
+- JWT based Authorization system
+- Admin Can create new Items
+- Client users can order Items
+- Admin Can view All users list and delete user
+- All field based filter and searching system
+- dockarization of backend and frontend
+- [server](https://github.com/sifat18/arraytics_task_backend)
+- [server_docker](https://hub.docker.com/repository/docker/ibnsifat/arraytics_backend/general)
+- [client_docker](https://hub.docker.com/repository/docker/ibnsifat/arraytics_front/general)
+- admin credentials admin@admin.com - 123456
+- client credentials demo@gmail.com - 123456
+-
+
+#### React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
@@ -17,12 +32,12 @@ If you are developing a production application, we recommend updating the config
 export default {
   // other rules...
   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
+    ecmaVersion: "latest",
+    sourceType: "module",
+    project: ["./tsconfig.json", "./tsconfig.node.json"],
     tsconfigRootDir: __dirname,
   },
-}
+};
 ```
 
 - Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
