@@ -52,12 +52,54 @@ export const serviceApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+    createOrder: build.mutation({
+      query: (data) => ({
+        url: `/orders`,
+        method: "POST",
+        data: data,
+      }),
+      // invalidatesTags: [""],
+    }),
+    updateOrder: build.mutation({
+      query: (data) => ({
+        url: `/orders/${data.id}`,
+        method: "PATCH",
+        data: data,
+      }),
+      invalidatesTags: ["order"],
+    }),
+    deleteOrder: build.mutation({
+      query: (id) => ({
+        url: `/orders/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["order"],
+    }),
+    orders: build.query({
+      query: (arg: Record<string, any>) => {
+        return {
+          url: "/orders",
+          method: "GET",
+          params: arg,
+        };
+      },
+      transformResponse: (response: any) => {
+        return {
+          orders: response?.data,
+        };
+      },
+      providesTags: ["order"],
+    }),
   }),
 });
 //
 export const {
   useCreateUserMutation,
   useClientsQuery,
+  useOrdersQuery,
   useDeleteClientMutation,
   useUpdateClientMutation,
+  useCreateOrderMutation,
+  useDeleteOrderMutation,
+  useUpdateOrderMutation,
 } = serviceApi;

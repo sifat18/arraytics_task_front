@@ -1,13 +1,17 @@
 import Hero from "../components/UI/Hero";
-import { Card, Row, Col, Tooltip, Divider } from "antd";
+import { Card, Row, Col, Tooltip, Divider, message } from "antd";
 import glass from "/glass-1.jpg";
 import dummy from "/dummy.png";
 import glassUpcoming from "/glass-2.jpg";
 import { IoIosSearch } from "react-icons/io";
 import { LiaShoppingBasketSolid } from "react-icons/lia";
 import { useItemsQuery } from "../redux/api/itemApi";
+import { getUserInfo } from "../helpers/authHelper";
+import { useCreateOrderMutation } from "../redux/api/userApi";
 
 export const Home = () => {
+  const { Id } = getUserInfo();
+  const [createOrder] = useCreateOrderMutation();
   const { data: items, isLoading } = useItemsQuery({});
   console.log({ items });
   return (
@@ -36,7 +40,23 @@ export const Home = () => {
                 </Tooltip>
                 <Tooltip title="Add to Cart">
                   <div className="circle">
-                    <div className="circle-icon">
+                    <div
+                      className="circle-icon"
+                      onClick={() => {
+                        // setIsModalOpen(true);
+                        createOrder({
+                          services: (item as any)?.Id,
+                          client: Id,
+                          status: "pending",
+                        }).then((res) => {
+                          if ((res as any)?.data) {
+                            message.success("Service Booked");
+                          } else {
+                            message.error("Something went wrong");
+                          }
+                        });
+                      }}
+                    >
                       <LiaShoppingBasketSolid />
                     </div>
                   </div>

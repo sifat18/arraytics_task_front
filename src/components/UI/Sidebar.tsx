@@ -62,8 +62,8 @@ const sidebarItems = (role: string) => {
           key: `/profile/all_users`,
         },
         {
-          label: <NavLink to={`/${role}/get-all-order`}>All Order</NavLink>,
-          key: `/${role}/get-all-order`,
+          label: <NavLink to={`/profile/all_orders`}>All Order</NavLink>,
+          key: `/profile/all_orders`,
         },
         {
           label: <NavLink to={`/profile/all_items`}>All Items</NavLink>,
@@ -73,15 +73,19 @@ const sidebarItems = (role: string) => {
           label: <NavLink to={`/profile/create_item`}>Create Items</NavLink>,
           key: `/profile/create_item`,
         },
+        {
+          label: <NavLink to={`/profile/create_admin`}>Create Admin</NavLink>,
+          key: `/profile/create_admin`,
+        },
       ],
     },
   ];
 
   const clientSidebarItems: MenuProps["items"] = [
     {
-      label: <NavLink to={`/${role}/orders`}>My-Orders</NavLink>,
+      label: <NavLink to={`/profile/all_orders`}>My-Orders</NavLink>,
       icon: <TableOutlined />,
-      key: `/${role}/orders`,
+      key: `/profile/all_orders`,
     },
   ];
 

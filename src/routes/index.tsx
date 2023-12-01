@@ -10,6 +10,8 @@ import DashBoard from "../pages/DashBoard";
 import GetUsers from "../pages/GetUsers";
 import CreateItem from "../pages/CreateItem";
 import GetItems from "../pages/GetItems";
+import CreateAdmin from "../components/UI/CreateAdmin";
+import GetOrders from "../pages/GetOrders";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -67,12 +69,20 @@ export const router = createBrowserRouter([
         element: <GetUsers />,
       },
       {
+        path: "/profile/all_orders",
+        element: <GetOrders />,
+      },
+      {
         path: "/profile/all_items",
         element: <GetItems />,
       },
       {
         path: "/profile/create_item",
         element: <CreateItem />,
+      },
+      {
+        path: "/profile/create_admin",
+        element: <CreateAdmin />,
       },
     ],
   },
