@@ -26,12 +26,11 @@ const Footer = () => {
           <h4>Company</h4>
           <p>Our team</p>
           <p>Terms</p>
-          <p>How it works</p>
         </div>
         <div className="footer-info-column">
           <h4>Services</h4>
           <p>Pickup</p>
-          <p>Laundry</p>
+          <p>How it works</p>
         </div>
       </div>
       <div className="footer-social">
