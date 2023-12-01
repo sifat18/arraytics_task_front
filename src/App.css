@@ -371,3 +371,7 @@ background-color: #edf2f4;
     order: unset;
   }
 }
+
+.ant-modal-footer {
+  display: none;
+}

@@ -8,6 +8,8 @@ import Register from "../components/UI/Register";
 import { Home } from "../pages/Home";
 import DashBoard from "../pages/DashBoard";
 import GetUsers from "../pages/GetUsers";
+import CreateItem from "../pages/CreateItem";
+import GetItems from "../pages/GetItems";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -50,11 +52,27 @@ export const router = createBrowserRouter([
   },
   {
     path: "/profile",
-    element: <DashBoard children={<GetUsers />} />,
+    element: <DashBoard />,
     children: [
+      //   {
+      //     path: "/profile",
+      //     element: (
+      //       <DashBoard>
+      //         <GetUsers />
+      //       </DashBoard>
+      //     ),
+      //   },
       {
-        path: "/profile/all-users",
-        element: <DashBoard children={<GetUsers />} />,
+        path: "/profile/all_users",
+        element: <GetUsers />,
+      },
+      {
+        path: "/profile/all_items",
+        element: <GetItems />,
+      },
+      {
+        path: "/profile/create_item",
+        element: <CreateItem />,
       },
     ],
   },

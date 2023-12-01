@@ -15,15 +15,16 @@ import ActionBar from "../Forms/ActionBar";
 import AnTable from "../AnTable";
 import Form from "../Forms/Form";
 import FormInput from "../Forms/FormInput";
+import {} from "../../redux/api/userApi";
 import {
-  useClientsQuery,
-  useDeleteClientMutation,
-  useUpdateClientMutation,
-} from "../../redux/api/userApi";
+  useDeleteItemMutation,
+  useItemsQuery,
+  useUpdateItemMutation,
+} from "../../redux/api/itemApi";
 
-const GetUsersList = () => {
-  const [updateUser] = useUpdateClientMutation();
-  const [deleteUser] = useDeleteClientMutation();
+const GetItemsList = () => {
+  const [updateItem] = useUpdateItemMutation();
+  const [deleteItem] = useDeleteItemMutation();
 
   const query: Record<string, any> = {};
   const [sortBy, setSortBy] = useState<string>("");
@@ -43,9 +44,9 @@ const GetUsersList = () => {
   if (debouncedTerm) {
     query["searchTerm"] = debouncedTerm;
   }
-  const { data, isLoading } = useClientsQuery({ ...query });
+  const { data, isLoading } = useItemsQuery({ ...query });
 
-  const users = data?.users;
+  const item = data?.items;
   //   const meta = data?.meta;
 
   const handleOk = () => {
@@ -64,10 +65,7 @@ const GetUsersList = () => {
       title: "Name",
       dataIndex: "Name",
     },
-    {
-      title: "Email",
-      dataIndex: "email",
-    },
+
     {
       title: "Created By",
       dataIndex: "created_by",
@@ -106,7 +104,7 @@ const GetUsersList = () => {
                     <>
                       <Button
                         onClick={() => {
-                          deleteUser(data?.Id);
+                          deleteItem(data?.Id);
                           Modal.destroyAll();
                         }}
                       >
@@ -128,7 +126,6 @@ const GetUsersList = () => {
       },
     },
   ];
-
   const onPaginationChange = (page: number, pageSize: number) => {
     // setPage(page);
     // setSize(pageSize);
@@ -148,7 +145,7 @@ const GetUsersList = () => {
   const onSubmit = async (data: any) => {
     data.Id = singleData?.Id;
     try {
-      const res = await updateUser(data).unwrap();
+      const res = await updateItem(data).unwrap();
       if (res) {
         message.success("User updated");
         setIsModalOpen(false);
@@ -162,7 +159,7 @@ const GetUsersList = () => {
   const defaultValues = {};
   return (
     <div>
-      <ActionBar title="Users List">
+      <ActionBar title="Items List">
         <Input
           type="text"
           size="large"
@@ -190,7 +187,7 @@ const GetUsersList = () => {
       <AnTable
         loading={isLoading}
         columns={columns}
-        dataSource={users}
+        dataSource={item}
         onPaginationChange={onPaginationChange}
         onTableChange={onTableChange}
         showPagination={false}
@@ -206,7 +203,7 @@ const GetUsersList = () => {
             }}
             level={2}
           >
-            Update User
+            Update Item
           </Title>
         }
         open={isModalOpen}
@@ -248,7 +245,7 @@ const GetUsersList = () => {
                     color: "#35353F",
                   }}
                 >
-                  Users information
+                  Item information
                 </p>
                 <Row gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
                   <Col span={24} style={{ margin: "10px 0" }}>
@@ -290,4 +287,4 @@ const GetUsersList = () => {
   );
 };
 
-export default GetUsersList;
+export default GetItemsList;

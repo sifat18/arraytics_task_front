@@ -5,8 +5,11 @@ import dummy from "/dummy.png";
 import glassUpcoming from "/glass-2.jpg";
 import { IoIosSearch } from "react-icons/io";
 import { LiaShoppingBasketSolid } from "react-icons/lia";
+import { useItemsQuery } from "../redux/api/itemApi";
 
 export const Home = () => {
+  const { data: items, isLoading } = useItemsQuery({});
+  console.log({ items });
   return (
     <div>
       <Hero />
@@ -15,93 +18,33 @@ export const Home = () => {
       </Divider>
 
       <Row gutter={[24, 40]} style={{ width: " 100%", marginTop: "-2em" }}>
-        <Col
-          //   key={idx}
-          xs={20}
-          md={12}
-          lg={8}
-          style={{ margin: "1em auto" }}
-        >
-          <Card className="itemCard">
-            <img src={glass} alt="" style={{ maxWidth: "100%" }} />
-            <p style={{ textAlign: "center", marginTop: "-5em" }}>Name</p>
+        {items?.items?.map((item: any, idx: number) => (
+          <Col key={idx} xs={20} md={12} lg={8} style={{ margin: "1em auto" }}>
+            <Card className="itemCard">
+              <img src={glass} alt="" style={{ maxWidth: "100%" }} />
+              <p style={{ textAlign: "center", marginTop: "-5em" }}>
+                {item?.Name}
+              </p>
 
-            <section className="itemCard-section">
-              <Tooltip title="Quick View">
-                <div className="circle">
-                  <div className="circle-icon">
-                    <IoIosSearch />
+              <section className="itemCard-section">
+                <Tooltip title="Quick View">
+                  <div className="circle">
+                    <div className="circle-icon">
+                      <IoIosSearch />
+                    </div>
                   </div>
-                </div>
-              </Tooltip>
-              <Tooltip title="Add to Cart">
-                <div className="circle">
-                  <div className="circle-icon">
-                    <LiaShoppingBasketSolid />
+                </Tooltip>
+                <Tooltip title="Add to Cart">
+                  <div className="circle">
+                    <div className="circle-icon">
+                      <LiaShoppingBasketSolid />
+                    </div>
                   </div>
-                </div>
-              </Tooltip>
-            </section>
-          </Card>
-        </Col>
-        <Col
-          //   key={idx}
-          xs={20}
-          md={12}
-          lg={8}
-          style={{ margin: "1em auto" }}
-        >
-          <Card className="itemCard">
-            <img src={glass} alt="" style={{ maxWidth: "100%" }} />
-            <p style={{ textAlign: "center", marginTop: "-5em" }}>Name</p>
-
-            <section className="itemCard-section">
-              <Tooltip title="Quick View">
-                <div className="circle">
-                  <div className="circle-icon">
-                    <IoIosSearch />
-                  </div>
-                </div>
-              </Tooltip>
-              <Tooltip title="Add to Cart">
-                <div className="circle">
-                  <div className="circle-icon">
-                    <LiaShoppingBasketSolid />
-                  </div>
-                </div>
-              </Tooltip>
-            </section>
-          </Card>
-        </Col>
-        <Col
-          //   key={idx}
-          xs={20}
-          md={12}
-          lg={8}
-          style={{ margin: "1em auto" }}
-        >
-          <Card className="itemCard">
-            <img src={glass} alt="" style={{ maxWidth: "100%" }} />
-            <p style={{ textAlign: "center", marginTop: "-5em" }}>Name</p>
-
-            <section className="itemCard-section">
-              <Tooltip title="Quick View">
-                <div className="circle">
-                  <div className="circle-icon">
-                    <IoIosSearch />
-                  </div>
-                </div>
-              </Tooltip>
-              <Tooltip title="Add to Cart">
-                <div className="circle">
-                  <div className="circle-icon">
-                    <LiaShoppingBasketSolid />
-                  </div>
-                </div>
-              </Tooltip>
-            </section>
-          </Card>
-        </Col>
+                </Tooltip>
+              </section>
+            </Card>
+          </Col>
+        ))}
       </Row>
       <Divider style={{ marginTop: "3em" }} orientation="center">
         UPCOMING PRODUCTS

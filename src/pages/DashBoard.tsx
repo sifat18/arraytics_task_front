@@ -4,8 +4,9 @@ import { isLoggedIn } from "../helpers/authHelper";
 import { useNavigate } from "react-router-dom";
 import SideBar from "../components/UI/Sidebar";
 import Contents from "../components/UI/Contents";
+import { Outlet } from "react-router-dom";
 
-const DashBoard = ({ children }: { children: React.ReactNode }) => {
+const DashBoard = () => {
   const userLoggedIn = isLoggedIn();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -33,11 +34,13 @@ const DashBoard = ({ children }: { children: React.ReactNode }) => {
       </Row>
     );
   }
-
+  //   console.log({ children });
   return (
     <Layout hasSider>
       <SideBar />
-      <Contents>{children}</Contents>
+      <Contents>
+        <Outlet />
+      </Contents>
     </Layout>
   );
 };

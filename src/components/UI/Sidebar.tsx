@@ -55,23 +55,23 @@ const sidebarItems = (role: string) => {
     {
       label: "Manage",
       icon: <TableOutlined />,
-      key: `/${role}/manage-client`,
+      key: `/profile/manage-client`,
       children: [
         {
-          label: <NavLink to={`/${role}/all-users`}>All clients</NavLink>,
-          key: `/${role}/all-users`,
+          label: <NavLink to={`/profile/all_users`}>All clients</NavLink>,
+          key: `/profile/all_users`,
         },
         {
           label: <NavLink to={`/${role}/get-all-order`}>All Order</NavLink>,
           key: `/${role}/get-all-order`,
         },
         {
-          label: <NavLink to={`/${role}/get-all-service`}>All Items</NavLink>,
-          key: `/${role}/get-all-service`,
+          label: <NavLink to={`/profile/all_items`}>All Items</NavLink>,
+          key: `/profile/all_items`,
         },
         {
-          label: <NavLink to={`/${role}/create-service`}>Create Items</NavLink>,
-          key: `/${role}/create-service`,
+          label: <NavLink to={`/profile/create_item`}>Create Items</NavLink>,
+          key: `/profile/create_item`,
         },
       ],
     },
