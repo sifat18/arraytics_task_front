@@ -17,13 +17,13 @@
 
 class Car {
 
-  <!-- // The constructor will take a 'name' parameter to set the car name otherwise it will be hard to identify distinct car object. -->
+// The constructor will take a 'name' parameter to set the car name otherwise it will be hard to identify distinct car object.
 
 constructor(name) {
 this.name = name;
 }
 
-  <!-- //  the 'name' property, should be initialized within the constructor thats its removed from here -->
+// the 'name' property, should be initialized within the constructor thats its removed from here
 
 printName() {
 console.log("Car name: " + this.name);
@@ -36,13 +36,13 @@ console.log("The Tesla Car finishes assembly every Friday at 5pm.");
 
 class TeslaCar extends Car {
 
-  <!-- // as TeslaCar is a child of Car so to access parents constructor to give it a distinct name we call the super function with the name -->
+// as TeslaCar is a child of Car so to access parents constructor to give it a distinct name we call the super function with the name
 
 constructor(name) {
 super(name);
 }
 
-<!-- // in the driver code section we are passing parameters so included the parameter here and to get a clear idea of the report format and  what is the report about by adding the this.name -->
+// in the driver code section we are passing parameters so included the parameter here and to get a clear idea of the report format and what is the report about by adding the this.name
 
 generateAssemblyReports(reportFormat) {
 console.log("Generating assembly reports for " + this.name + "...");
